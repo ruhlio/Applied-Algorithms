@@ -63,13 +63,16 @@ int main( int argc, char *argv[] ) {
 }
 
 int find_greatest_path_value( const Rows& rows ) {
-   Rows max_values( rows.size(), Row( rows.size(), 0 ) );
-   max_values[0][0] = rows[0][0];
+	// extra column of 0s added to max_values to avoid checking for out of bounds
+   Rows max_values( rows.size(), Row( rows.size() + 1, 0 ) );
+
+	// rows is 0 indexed, max_values columns are 1 indexed
+   max_values[0][1] = rows[0][0];
    for ( size_t rows_index = 1; rows_index < rows.size(); rows_index++ ) {
       Row row = rows[rows_index];
-      for ( size_t row_index = 0; row_index < row.size(); row_index++ ) {
+      for ( size_t row_index = 1; row_index <= row.size(); row_index++ ) {
          max_values[rows_index][row_index] = 
-            row[row_index] + max( max_values[rows_index - 1][row_index - 1], 
+            row[row_index - 1] + max( max_values[rows_index - 1][row_index - 1], 
                                   max_values[rows_index - 1][row_index] );
       }
    }
