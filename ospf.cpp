@@ -1,6 +1,6 @@
 // Jeff Ruhl
 // OSPF Routing
-#include <cassert>
+#include <functional>
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -111,7 +111,7 @@ vector<Cost> find_costs( int from_router_id,
                          const RoutingTable& routing_table ) {
 	vector<int> parents;
   vector<Cost> distances;
-  vector<bool> visited( false, routing_table.size() );
+  vector<bool> visited;
 	priority_queue<RouterCost, vector<RouterCost>, greater<RouterCost> > cheapest;
 
   // scans a router, finding any shorter paths from it to other routers
@@ -140,6 +140,7 @@ vector<Cost> find_costs( int from_router_id,
   // keep the parallel vector indices aligned with the router ids
   distances.push_back( 0 );
   parents.push_back( 0 );
+  visited.push_back( false );
 
   // initialize arrays
 	for ( int router_id = 1; (size_t)router_id < routing_table.size(); ++router_id ) {
