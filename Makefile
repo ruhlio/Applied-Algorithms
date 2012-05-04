@@ -104,3 +104,8 @@ surjections: surjections.cpp surjections.in
 	chmod +x $(BIN_DIR)/surjections
 	cp surjections.in $(BIN_DIR)/surjections.in
 
+sync: sync.cpp sync.in
+	$(CC) $(CFLAGS) -fpermissive sync.cpp -o $(OBJ_DIR)/sync.o
+	$(CC) $(OBJ_DIR)/sync.o -o $(BIN_DIR)/sync
+	chmod +x $(BIN_DIR)/sync
+	cp sync.in $(BIN_DIR)/sync.in
